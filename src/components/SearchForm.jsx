@@ -2,7 +2,7 @@ import './SearchForm.css';
 
 import { useState } from 'react';
 
-export function SearchForm({ onSearchSubmit }) {
+export function SearchForm({ onSearchSubmit, displayArt }) {
 	const [query, setQuery] = useState('');
 
 	function handleInputChange(evt) {
@@ -28,7 +28,7 @@ export function SearchForm({ onSearchSubmit }) {
 				value={query}
 				onChange={handleInputChange}
 			/>
-			<button className="button" type="submit">
+			<button className="button" type="submit" onClick={displayArt}>
 				Search
 			</button>
 		</form>
