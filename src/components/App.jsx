@@ -1,12 +1,15 @@
 import './App.css';
 import { ImageDetailsPage } from './ImageDetailsPage';
+import { ArtList } from './ArtList';
 import { searchArtworks } from '../utils/api';
 import { SearchForm } from './SearchForm';
 import { Footer } from './Footer';
 import { useState } from 'react';
 
 export function App() {
-	const [galleryItems, setGalleryItems] = useState([]);
+	const [galleryItems, setGalleryItems] = useState(null);
+	const [data, setData] = useState(null);
+	const [isLoading, setIsLoading] = useState(true);
 	function onSearchSubmit(query) {
 		// Search for the users's query.
 		// TODO: render the results, instead of logging them to the console.
@@ -15,20 +18,28 @@ export function App() {
 		// our UI, we need to make real requests!
 		// @see: ./src/uitls/api.js
 		searchArtworks(query).then((json) => {
-			console.log(json);
-			setGalleryItems((prevState) => ({ ...prevState, json }));
+			setData(json.data);
+			setIsLoading(false);
 		});
 	}
-	console.log(setGalleryItems);
+
 	return (
 		<div className="App">
 			<h1>TCL Career Lab Art Finder</h1>
-			<SearchForm
-				itemName={galleryItems.image_id}
-				title={galleryItems.artist_title}
-				onSearchSubmit={onSearchSubmit}
-			/>
-			<ImageDetailsPage />
+			{!galleryItems && <SearchForm onSearchSubmit={onSearchSubmit} />}
+			{data && !galleryItems && (
+				<ArtList
+					data={data}
+					setGalleryItems={setGalleryItems}
+					isLoading={isLoading}
+				/>
+			)}
+			{galleryItems && (
+				<ImageDetailsPage
+					setGalleryItems={setGalleryItems}
+					IMAGE_ID={galleryItems.image_id}
+				/>
+			)}
 			<Footer />
 		</div>
 	);

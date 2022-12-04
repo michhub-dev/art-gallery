@@ -28,7 +28,7 @@ export function SearchForm({ onSearchSubmit, displayArt }) {
 				value={query}
 				onChange={handleInputChange}
 			/>
-			<button className="button" type="submit" onClick={displayArt}>
+			<button className="button" type="submit">
 				Search
 			</button>
 		</form>
