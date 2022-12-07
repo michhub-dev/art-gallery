@@ -2,16 +2,14 @@ import './SearchForm.css';
 
 import { useState } from 'react';
 
-export function SearchForm({ onSearchSubmit, displayArt }) {
-	const [query, setQuery] = useState('');
-
+export function SearchForm({ onSearchSubmit, displayArt, query, setQuery }) {
 	function handleInputChange(evt) {
 		setQuery(evt.target.value);
 	}
 
 	function handleFormSubmit(e) {
 		e.preventDefault();
-		onSearchSubmit(query);
+		onSearchSubmit(query); //call the api on submit
 	}
 
 	return (

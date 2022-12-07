@@ -10,6 +10,7 @@ export function App() {
 	const [galleryItems, setGalleryItems] = useState(null);
 	const [data, setData] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
+	const [query, setQuery] = useState('');
 	function onSearchSubmit(query) {
 		// Search for the users's query.
 		// TODO: render the results, instead of logging them to the console.
@@ -26,20 +27,29 @@ export function App() {
 	return (
 		<div className="App">
 			<h1>TCL Career Lab Art Finder</h1>
-			{!galleryItems && <SearchForm onSearchSubmit={onSearchSubmit} />}
-			{data && !galleryItems && (
+			{!galleryItems && (
+				<SearchForm
+					query={query}
+					setQuery={setQuery}
+					onSearchSubmit={onSearchSubmit}
+				/>
+			)}{' '}
+			{/* if no selected art display form*/}
+			{query && !galleryItems && (
 				<ArtList
 					data={data}
-					setGalleryItems={setGalleryItems}
 					isLoading={isLoading}
+					setGalleryItems={setGalleryItems}
 				/>
-			)}
+			)}{' '}
+			{/**if data is available and no selected art, display list of art */}
 			{galleryItems && (
 				<ImageDetailsPage
-					setGalleryItems={setGalleryItems}
 					IMAGE_ID={galleryItems.image_id}
+					setGalleryItems={setGalleryItems}
 				/>
-			)}
+			)}{' '}
+			{/**if art is selected, show image */}
 			<Footer />
 		</div>
 	);
