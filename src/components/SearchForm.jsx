@@ -2,7 +2,9 @@ import './SearchForm.css';
 
 import { useState } from 'react';
 
-export function SearchForm({ onSearchSubmit, displayArt, query, setQuery }) {
+export function SearchForm({ onSearchSubmit, displayArt }) {
+	const [query, setQuery] = useState('');
+
 	function handleInputChange(evt) {
 		setQuery(evt.target.value);
 	}

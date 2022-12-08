@@ -9,8 +9,7 @@ import { useState } from 'react';
 export function App() {
 	const [galleryItems, setGalleryItems] = useState(null);
 	const [data, setData] = useState(null);
-	const [isLoading, setIsLoading] = useState(true);
-	const [query, setQuery] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 	function onSearchSubmit(query) {
 		// Search for the users's query.
 		// TODO: render the results, instead of logging them to the console.
@@ -18,6 +17,7 @@ export function App() {
 		// don't make too many requests to the API! Once we've built out
 		// our UI, we need to make real requests!
 		// @see: ./src/uitls/api.js
+		setIsLoading(true);
 		searchArtworks(query).then((json) => {
 			setData(json.data);
 			setIsLoading(false);
@@ -27,15 +27,9 @@ export function App() {
 	return (
 		<div className="App">
 			<h1>TCL Career Lab Art Finder</h1>
-			{!galleryItems && (
-				<SearchForm
-					query={query}
-					setQuery={setQuery}
-					onSearchSubmit={onSearchSubmit}
-				/>
-			)}{' '}
+			{!galleryItems && <SearchForm onSearchSubmit={onSearchSubmit} />}{' '}
 			{/* if no selected art display form*/}
-			{query && !galleryItems && (
+			{data && !galleryItems && (
 				<ArtList
 					data={data}
 					isLoading={isLoading}
